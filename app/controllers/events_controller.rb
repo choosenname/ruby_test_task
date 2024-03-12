@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+  LATITUDE = 40.7128
+  LONGITUDE = -74.0060
+
   before_action :require_login
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
@@ -24,7 +27,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = current_user.events.find(params[:id])
+    @event = Event.find(params[:id])
     @weather_info = fetch_weather_info(@event.date)
   end
 
@@ -70,12 +73,16 @@ class EventsController < ApplicationController
   end
 
   def fetch_weather_info(date)
-    response = HTTParty.get("https://api.getambee.com/weather",
+    formatted_date = date.strftime("%Y-%m-%d")
+    from_time = "#{formatted_date} 00:00:00"
+    to_time = "#{formatted_date} 23:59:59"
+
+    response = HTTParty.get("https://api.ambeedata.com/weather/history/by-lat-lng",
                             query: {
-                              "api_key": "ee18f3e4f5a08d168a0e02f5795d34d0d0e315fa5b1fe368c1217fc9638d7669",
-                              "lat": "40.7128",
-                              "lng": "-74.0060",
-                              "date": date.to_s
+                              lat: LATITUDE,
+                              lng: LONGITUDE,
+                              from: from_time,
+                              to: to_time
                             })
 
     if response.success?
