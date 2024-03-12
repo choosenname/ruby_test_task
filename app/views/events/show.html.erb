@@ -2,6 +2,17 @@
 <p><strong>Date:</strong> <%= @event.date.strftime("%Y-%m-%d") %></p>
 <p><strong>Description:</strong> <%= @event.description %></p>
 
+# <% if @weather_info.present? %>
+#   <h2>Weather Information</h2>
+#   <p><strong>Temperature:</strong> <%= @weather_info["temperature"] %></p>
+#   <p><strong>Humidity:</strong> <%= @weather_info["humidity"] %></p>
+#   <!-- Другие погодные параметры, которые вы хотите отобразить -->
+# <% else %>
+#   <p>Weather information is not available</p>
+# <% end %>
+
+<p><strong>Category:</strong> <%= @event.category.name %></p>
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
 
