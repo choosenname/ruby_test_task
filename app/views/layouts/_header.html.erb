@@ -1,14 +1,14 @@
-<header>
-  <nav>
-    <ul>
+<header class="bg-gray-200 py-4">
+  <nav class="container mx-auto">
+    <ul class="flex justify-center items-center border-b border-gray-400 pb-2">
       <% if current_user %>
-        <li><%= link_to 'Profile', profile_path %></li>
-        <li><%= link_to 'Events', events_path %></li>
-        <li><%= link_to 'Categories', categories_path %></li>
-        <%= button_to 'Logout', logout_path, method: :delete, data: { confirm: 'Are you sure you want to logout?' } %>
+        <li class="mr-4"><%= link_to 'Profile', profile_path, class: "text-gray-700 hover:text-gray-900" %></li>
+        <li class="mr-4"><%= link_to 'Events', events_path, class: "text-gray-700 hover:text-gray-900" %></li>
+        <li class="mr-4"><%= link_to 'Categories', categories_path, class: "text-gray-700 hover:text-gray-900" %></li>
+        <li><%= button_to 'Logout', logout_path, method: :delete, data: { confirm: 'Are you sure you want to logout?' }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %></li>
       <% else %>
-        <li><%= link_to 'Login', login_path %></li>
-        <li><%= link_to 'Signup', signup_path %></li>
+        <li class="mr-4"><%= link_to 'Login', login_path, class: "text-gray-700 hover:text-gray-900" %></li>
+        <li><%= link_to 'Signup', signup_path, class: "text-gray-700 hover:text-gray-900" %></li>
       <% end %>
     </ul>
   </nav>

@@ -1,15 +1,23 @@
-<h1>User Profile</h1>
+<div class="max-w-md mx-auto mt-8">
+  <h1 class="text-2xl font-semibold mb-4">User Profile</h1>
 
-<p><strong>Email:</strong> <%= @user.email %></p>
-<p><strong>First Name:</strong> <%= @user.first_name %></p>
-<p><strong>Last Name:</strong> <%= @user.last_name %></p>
+  <div class="mb-4">
+    <p class="text-gray-700"><strong>Email:</strong> <%= @user.email %></p>
+    <p class="text-gray-700"><strong>First Name:</strong> <%= @user.first_name %></p>
+    <p class="text-gray-700"><strong>Last Name:</strong> <%= @user.last_name %></p>
+  </div>
 
-<%= link_to 'Edit Profile', edit_user_path(@user) %>
+  <div class="mb-4">
+    <%= link_to 'Edit Profile', edit_user_path(@user), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
 
-<% if @user.events.any? %>
-  <h2>Events Statistics</h2>
-  <p>Total Events: <%= @user.events.count %></p>
-  <p>Events Today: <%= @user.events.where('date = ?', Date.today).count %></p>
-<% else %>
-  <p>No events found.</p>
-<% end %>
+  <% if @user.events.any? %>
+    <h2 class="text-xl font-semibold">Events Statistics</h2>
+    <div class="mb-4">
+      <p class="text-gray-700">Total Events: <%= @user.events.count %></p>
+      <p class="text-gray-700">Events Today: <%= @user.events.where('date = ?', Date.today).count %></p>
+    </div>
+  <% else %>
+    <p class="text-gray-700">No events found.</p>
+  <% end %>
+</div>

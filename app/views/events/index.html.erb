@@ -1,29 +1,33 @@
-<h1>All Events</h1>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-4">All Events</h1>
 
-<%= form_with(url: events_path, method: "get", local: true) do %>
-  <div>
-    <%= label_tag :search_name, "Search by Name:" %>
-    <%= text_field_tag :search_name %>
+  <%= form_with(url: events_path, method: "get", local: true) do %>
+    <div class="mb-4">
+      <%= label_tag :search_name, "Search by Name:", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= text_field_tag :search_name, nil, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+    
+    <div class="mb-4">
+      <%= label_tag :search_category, "Search by Category:", class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= select_tag :search_category, options_from_collection_for_select(@categories, :id, :name), include_blank: "All Categories", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+    
+    <%= submit_tag "Search", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  <% end %>
+
+  <% @events.each do |event| %>
+    <div class="border border-gray-300 rounded-lg p-4 mb-4">
+      <h2 class="text-xl font-bold mb-2"><%= event.name %></h2>
+      <p><strong>Date:</strong> <%= event.date.strftime("%Y-%m-%d") %></p>
+      <p><strong>Description:</strong> <%= event.description %></p>
+      <p><strong>Category:</strong> <%= event.category.name if event.category %></p>
+      <p><%= link_to 'View', event_path(event), class: "text-blue-500 hover:text-blue-700 font-bold" %></p>
+    </div>
+  <% end %>
+
+  <p><%= link_to 'New Event', new_event_path, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %></p>
+
+  <div class="mt-4">
+    <%= will_paginate @events, class: "flex justify-center" %>
   </div>
-  
-  <div>
-    <%= label_tag :search_category, "Search by Category:" %>
-    <%= select_tag :search_category, options_from_collection_for_select(@categories, :id, :name), include_blank: "All Categories" %>
-  </div>
-  
-  <%= submit_tag "Search" %>
-<% end %>
-
-<% @events.each do |event| %>
-  <div>
-    <h2><%= event.name %></h2>
-    <p><%= event.date.strftime("%Y-%m-%d") %></p>
-    <p><%= event.description %></p>
-    <p><%= event.category.name if event.category %></p>
-    <p><%= link_to 'View', event_path(event) %></p>
-  </div>
-<% end %>
-
-<p><%= link_to 'New Event', new_event_path %></p>
-
-<%= will_paginate @events %>
+</div>

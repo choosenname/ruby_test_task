@@ -1,19 +1,23 @@
-<h1><%= @event.name %></h1>
-<p><strong>Date:</strong> <%= @event.date.strftime("%Y-%m-%d") %></p>
-<p><strong>Description:</strong> <%= @event.description %></p>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-4"><%= @event.name %></h1>
+  <p class="mb-4"><strong>Date:</strong> <%= @event.date.strftime("%Y-%m-%d") %></p>
+  <p class="mb-4"><strong>Description:</strong> <%= @event.description %></p>
 
-<% if @weather_info.present? %>
-  <h2>Weather Information</h2>
-  <p><strong>Temperature:</strong> <%= @weather_info["temperature"] %></p>
-  <p><strong>Humidity:</strong> <%= @weather_info["humidity"] %></p>
-  <!-- Другие погодные параметры, которые вы хотите отобразить -->
-<% else %>
-  <p>Weather information is not available</p>
-<% end %> 
+  <% if @weather_info.present? %>
+    <div class="mb-4">
+      <h2 class="text-xl font-bold">Weather Information</h2>
+      <p><strong>Temperature:</strong> <%= @weather_info["temperature"] %></p>
+      <p><strong>Humidity:</strong> <%= @weather_info["humidity"] %></p>
+    </div>
+  <% else %>
+    <p class="mb-4">Weather information is not available</p>
+  <% end %>
 
-<p><strong>Category:</strong> <%= @event.category.name %></p>
+  <p class="mb-4"><strong>Category:</strong> <%= @event.category.name %></p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
-
-<%= button_to 'Delete', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <div class="flex">
+    <%= link_to 'Edit', edit_event_path(@event), class: "mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= link_to 'Back', events_path, class: "mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= button_to 'Delete', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+</div>

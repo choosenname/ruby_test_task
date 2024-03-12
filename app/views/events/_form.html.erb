@@ -1,37 +1,38 @@
-<%= form_with(model: event, url: event.persisted? ? event_path(event) : events_path, local: true) do |form| %>
-  <% if event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<div class="container mx-auto px-4 py-8">
+  <%= form_with(model: event, url: event.persisted? ? event_path(event) : events_path, local: true) do |form| %>
+    <% if event.errors.any? %>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-4 rounded relative" role="alert">
+        <strong><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</strong>
+        <ul class="mt-1">
+          <% event.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-        <% event.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="mb-4">
+      <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :date, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.date_field :date, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :description, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.text_area :description, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :category_id, class: "block text-gray-700 text-sm font-bold mb-2" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select a category" }, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.submit "Save", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :date %>
-    <%= form.date_field :date %>
-  </div>
-
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :category_id %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: true %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

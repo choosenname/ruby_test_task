@@ -25,7 +25,7 @@ class EventsController < ApplicationController
 
   def show
     @event = current_user.events.find(params[:id])
-    # @weather_info = fetch_weather_info(@event.date)
+    @weather_info = fetch_weather_info(@event.date)
   end
 
   def edit
@@ -69,20 +69,20 @@ class EventsController < ApplicationController
     @event = current_user.events.find(params[:id])
   end
 
-  # def fetch_weather_info(date)
-  #   response = HTTParty.get("https://api.getambee.com/weather",
-  #                           query: {
-  #                             "api_key": "YOUR_API_KEY",
-  #                             "lat": "YOUR_LATITUDE",
-  #                             "lng": "YOUR_LONGITUDE",
-  #                             "date": date.to_s
-  #                           })
+  def fetch_weather_info(date)
+    response = HTTParty.get("https://api.getambee.com/weather",
+                            query: {
+                              "api_key": "ee18f3e4f5a08d168a0e02f5795d34d0d0e315fa5b1fe368c1217fc9638d7669",
+                              "lat": "40.7128",
+                              "lng": "-74.0060",
+                              "date": date.to_s
+                            })
 
-  #   if response.success?
-  #     weather_data = JSON.parse(response.body)
-  #     return weather_data["weather"]
-  #   else
-  #     return { "message" => "Information is not available" }
-  #   end
-  # end
+    if response.success?
+      weather_data = JSON.parse(response.body)
+      return weather_data["weather"]
+    else
+      return { "message" => "Information is not available" }
+    end
+  end
 end
