@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :require_login
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
     @categories = Category.all
@@ -27,12 +28,15 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = current_user.events.find(params[:id])
+    if @event.date.past?
+      redirect_to events_path, alert: 'You cannot edit past events.'
+    end
   end
 
   def update
-    @event = current_user.events.find(params[:id])
-    if @event.update(event_params)
+    if @event.date.past?
+      redirect_to events_path, alert: 'You cannot update past events.'
+    elsif @event.update(event_params)
       redirect_to event_path(@event), notice: 'Event was successfully updated.'
     else
       render :edit
@@ -40,9 +44,12 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = current_user.events.find(params[:id])
-    @event.destroy
-    redirect_to events_path, notice: 'Event was successfully destroyed.'
+    if @event.date.past?
+      redirect_to events_path, alert: 'You cannot delete past events.'
+    else
+      @event.destroy
+      redirect_to events_path, notice: 'Event was successfully destroyed.'
+    end
   end
 
   private
@@ -55,5 +62,9 @@ class EventsController < ApplicationController
     unless current_user
       redirect_to login_path, alert: 'You must be logged in to perform this action.'
     end
+  end
+
+  def set_event
+    @event = current_user.events.find(params[:id])
   end
 end
