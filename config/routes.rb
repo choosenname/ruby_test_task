@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'categories/index'
+  get 'categories/new'
+  get 'categories/create'
+  get 'categories/edit'
+  get 'categories/update'
+  get 'categories/destroy'
   root 'users#new'
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
@@ -10,4 +16,5 @@ Rails.application.routes.draw do
 
   resources :users
   resources :events
+  resources :categories
 end
