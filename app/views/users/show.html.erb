@@ -4,5 +4,12 @@
 <p><strong>First Name:</strong> <%= @user.first_name %></p>
 <p><strong>Last Name:</strong> <%= @user.last_name %></p>
 
-<%= link_to 'Edit Profile', edit_user_path(@user) %> |
-<%= link_to 'Back to Users List', users_path %>
+<%= link_to 'Edit Profile', edit_user_path(@user) %>
+
+<% if @user.events.any? %>
+  <h2>Events Statistics</h2>
+  <p>Total Events: <%= @user.events.count %></p>
+  <p>Events Today: <%= @user.events.where('date = ?', Date.today).count %></p>
+<% else %>
+  <p>No events found.</p>
+<% end %>

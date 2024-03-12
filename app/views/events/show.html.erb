@@ -1,0 +1,8 @@
+<h1><%= @event.name %></h1>
+<p><strong>Date:</strong> <%= @event.date.strftime("%Y-%m-%d") %></p>
+<p><strong>Description:</strong> <%= @event.description %></p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
+
+<%= button_to 'Delete', event_path(@event), method: :delete, data: { confirm: 'Are you sure?' } %>

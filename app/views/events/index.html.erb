@@ -1,0 +1,13 @@
+
+<h1>All Events</h1>
+
+<% @events.each do |event| %>
+  <div>
+    <h2><%= event.name %></h2>
+    <p><%= event.date.strftime("%Y-%m-%d") %></p>
+    <p><%= event.description %></p>
+    <p><%= link_to 'View', event_path(event) %></p>
+  </div>
+<% end %>
+
+<p><%= link_to 'New Event', new_event_path %></p>
